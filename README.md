@@ -139,14 +139,52 @@ again.
 Edit your main.tf.
 
 Example:
-
+````
 resource "aws_iam_role" "example" {
   name = "eks-cluster-cloud-v2"
 }
+````
 resource "aws_iam_role" "example1" {
   name = "eks-node-group-cloud-v2"
 }
-
+````
 Then:
-
+````
 terraform apply
+````
+Import Existing Roles into Terraform State (professional approach)
+
+If those roles are already correct and you want Terraform to manage them:
+````
+terraform import aws_iam_role.example eks-cluster-cloud
+````
+````
+terraform import aws_iam_role.example1 eks-node-group-cloud
+````
+Then run:
+````
+terraform plan
+````
+````
+terraform apply --auto-approve
+````
+````
+aws eks update-kubeconfig --name EKS_CLOUD --region ap-southeast-1 --profile eks
+````
+
+### $\color{red} \textbf {Step 6 → Creation  of  deployment  and service  for  EKS}$
+change the directory where deployment and service files are stored use the command →
+````
+cd ..
+````
+$\color{blue} \textbf {create  the  deployment}$
+````
+kubectl apply -f deployment.yaml
+````
+$\color{blue} \textbf {Now create  the service}$
+````
+kubectl apply -f service.yaml
+kubectl get all
+kubectl get svc mario-service
+````
+copy the load balancer ingress and paste it on browser and your game is running
