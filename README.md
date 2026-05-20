@@ -144,6 +144,7 @@ resource "aws_iam_role" "example" {
   name = "eks-cluster-cloud-v2"
 }
 ````
+````
 resource "aws_iam_role" "example1" {
   name = "eks-node-group-cloud-v2"
 }
