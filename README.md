@@ -79,3 +79,74 @@ mv ./kubectl ~/.local/bin/kubectl
 ````
 kubectl version --client
 ````
+### $\color{red} \textbf {Step 5 → Building Infrastructure  Using  terraform}$
+$\color{blue} \textbf {Install  GIT}$
+````
+git clone https://github.com/abhipraydhoble/Project-Super-Mario.git
+````
+````
+cd Project-Super-Mario
+cd EKS-TF
+````
+````
+vim backend.tf
+````
+
+$\color{blue} \textbf {Create \ Infra:}$
+````
+terraform init
+````
+Check available profiles:
+````
+aws configure list-profiles
+````
+If eks is not listed, create it:
+````
+aws configure --profile eks
+````
+It will ask for:
+
+AWS Access Key ID
+AWS Secret Access Key
+Default region name
+Default output format
+Then verify:
+````
+aws sts get-caller-identity --profile eks
+````
+If it returns your AWS account details, run:
+````
+terraform init
+````
+again.
+Create the bucket manually using AWS CLI:
+````
+aws s3 mb s3://shriyali-terraform-backend-2004 --region ap-south-1 --profile eks
+````
+Then verify:
+````
+aws s3 ls --profile eks
+````
+You should see:
+````
+shriyali-terraform-backend-2004
+````
+After that run:
+````
+terraform init
+````
+again.
+Edit your main.tf.
+
+Example:
+
+resource "aws_iam_role" "example" {
+  name = "eks-cluster-cloud-v2"
+}
+resource "aws_iam_role" "example1" {
+  name = "eks-node-group-cloud-v2"
+}
+
+Then:
+
+terraform apply
